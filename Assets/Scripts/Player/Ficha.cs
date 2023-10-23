@@ -32,7 +32,7 @@ public class Ficha : MonoBehaviour
         Vector2 dragPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); //vector temporal que detecta la posicion del mouse
         clampedPosition = dragPosition;
 
-        float dragDistance = Vector2.Distance(startPosition, dragPosition); //variable temporal que limita la distancia del drag
+        float dragDistance = Vector2.Distance(startPosition, dragPosition); //variable temporal que calcula la distancia de arrastre
 
         if (dragDistance > MAX_DISTANCE)
         {
@@ -80,7 +80,7 @@ public class Ficha : MonoBehaviour
             if (canSlow) //si la ficha tiene activado u n power up
             {
                 Debug.Log("slow");
-                collision.GetComponent<Rigidbody2D>().velocity = Vector2.zero; //la velocidad se vuelve cero, se "congela"
+                //collision.GetComponent<Rigidbody2D>().velocity = Vector2.zero; //la velocidad se vuelve cero, se "congela"
                 //canSlow = false;
             }
             else
