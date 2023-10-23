@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class AILaunch : MonoBehaviour
 {
-    private float force = -400f;
-    private float MAX_DISTANCE = 2f;
-    private Vector2 maxDrag;
+    [SerializeField] private float force;
+    [SerializeField] private float MAX_DISTANCE;
 
     private Rigidbody2D AI_RB;
     private Vector2 startPosition, clampedPosition;
@@ -28,11 +27,22 @@ public class AILaunch : MonoBehaviour
 
     public void LaunchFicha()
     {
-        Debug.Log("Lanzando");
-        clampedPosition = startPosition * MAX_DISTANCE;
+        clampedPosition = new Vector2(Random.Range(startPosition.x, Random.Range(-MAX_DISTANCE, MAX_DISTANCE)), 
+                                      Random.Range(startPosition.y, Random.Range(-MAX_DISTANCE, MAX_DISTANCE))).normalized * MAX_DISTANCE;
+        Debug.Log(clampedPosition);
         AI_RB.isKinematic = false;
         Vector2 throwVector = startPosition - clampedPosition;
         AI_RB.AddForce(throwVector * force);
-        Invoke("LaunchFicha", 5f);
+        Invoke("Reset", 5f);
+    }
+
+    private void Reset()
+    {
+        transform.position = startPosition;
+        AI_RB.isKinematic = true;
+        AI_RB.velocity = Vector2.zero;
+        canSlow = false;
+
+        Invoke("LaunchFicha", 1f);
     }
 }
