@@ -4,24 +4,27 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool ply_ai; //variable para saber si es porteria aliada o enemiga. Verdaderon para aliada, falso para enemiga
+    public ScoreManager score;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Ficha")
+        if (!ply_ai)
         {
-            collision.GetComponent<Ficha>().Reset();
-            Debug.Log("aumenta puntaje");
-            
+            if (collision.tag == "Ficha")
+            {
+                collision.GetComponent<Ficha>().Reset();
+                score.AddPointPlayer();
+            }
+        }
+        else
+        {
+            if (collision.tag == "AI")
+            {
+                collision.GetComponent<AILaunch>().Reset();
+                score.AddPointEnemy();
+            }
         }
     }
 }

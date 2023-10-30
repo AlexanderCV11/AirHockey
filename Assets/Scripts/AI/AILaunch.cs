@@ -10,7 +10,7 @@ public class AILaunch : MonoBehaviour
     private Rigidbody2D AI_RB;
     private Vector2 startPosition, clampedPosition;
     private bool canSlow;
-    // Start is called before the first frame update
+
     void Start()
     {
         AI_RB = GetComponent<Rigidbody2D>();
@@ -29,14 +29,14 @@ public class AILaunch : MonoBehaviour
     {
         clampedPosition = new Vector2(Random.Range(startPosition.x, Random.Range(-MAX_DISTANCE, MAX_DISTANCE)), 
                                       Random.Range(startPosition.y, Random.Range(-MAX_DISTANCE, MAX_DISTANCE))).normalized * MAX_DISTANCE;
-        Debug.Log(clampedPosition);
+        //Debug.Log(clampedPosition);
         AI_RB.isKinematic = false;
         Vector2 throwVector = startPosition - clampedPosition;
         AI_RB.AddForce(throwVector * force);
         Invoke("Reset", 5f);
     }
 
-    private void Reset()
+    public void Reset()
     {
         transform.position = startPosition;
         AI_RB.isKinematic = true;

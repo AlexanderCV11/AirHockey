@@ -75,7 +75,7 @@ public class Ficha : MonoBehaviour
     /*cuando algo entra en el trigger*/
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Ficha") //si el tag del collaider es "Ficha"
+        if (collision.tag == "AI") //si el tag del collaider es "Ficha"
         {
             if (canSlow) //si la ficha tiene activado u n power up
             {
@@ -85,7 +85,6 @@ public class Ficha : MonoBehaviour
             }
             else
             {
-                Debug.Log("Choque");
                 rb.isKinematic = false; //se vuelve dinamica la ficha
             }
 
