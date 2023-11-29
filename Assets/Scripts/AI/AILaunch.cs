@@ -7,9 +7,9 @@ public class AILaunch : MonoBehaviour
     [SerializeField] private float force;
     [SerializeField] private float MAX_DISTANCE;
 
-    private Rigidbody2D AI_RB;
-    private Vector2 startPosition, clampedPosition;
-    private bool canSlow;
+    private Rigidbody2D AI_RB; //ref del rigidbody de la ficha
+    private Vector2 startPosition, clampedPosition; 
+    //private bool canSlow;
 
     void Start()
     {
@@ -27,8 +27,8 @@ public class AILaunch : MonoBehaviour
 
     public void LaunchFicha()
     {
-        clampedPosition = new Vector2(Random.Range(startPosition.x, Random.Range(-MAX_DISTANCE, MAX_DISTANCE)), 
-                                      Random.Range(startPosition.y, Random.Range(-MAX_DISTANCE, MAX_DISTANCE))).normalized * MAX_DISTANCE;
+        clampedPosition = new Vector2(8.0f, 
+                                      Random.Range(-MAX_DISTANCE, MAX_DISTANCE));
         //Debug.Log(clampedPosition);
         AI_RB.isKinematic = false;
         Vector2 throwVector = startPosition - clampedPosition;
@@ -41,7 +41,7 @@ public class AILaunch : MonoBehaviour
         transform.position = startPosition;
         AI_RB.isKinematic = true;
         AI_RB.velocity = Vector2.zero;
-        canSlow = false;
+        //canSlow = false;
 
         Invoke("LaunchFicha", 1f);
     }

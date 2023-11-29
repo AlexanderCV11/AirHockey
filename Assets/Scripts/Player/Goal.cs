@@ -1,3 +1,4 @@
+/*si la porteria es enemiga, la variable ply_ai es "true" y se espera qu en esta porteria (enemiga) entre la ficha del jugador*/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,18 +13,19 @@ public class Goal : MonoBehaviour
     {
         if (!ply_ai)
         {
-            if (collision.tag == "Ficha")
-            {
-                collision.GetComponent<Ficha>().Reset();
-                score.AddPointPlayer();
-            }
-        }
-        else
-        {
             if (collision.tag == "AI")
             {
                 collision.GetComponent<AILaunch>().Reset();
                 score.AddPointEnemy();
+            }
+        }
+        else
+        {
+            
+            if (collision.tag == "Ficha")
+            {
+                collision.GetComponent<Ficha>().Reset();
+                score.AddPointPlayer();
             }
         }
     }
