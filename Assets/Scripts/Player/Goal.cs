@@ -15,7 +15,7 @@ public class Goal : MonoBehaviour
         {
             if (collision.tag == "AI")
             {
-                collision.GetComponent<AILaunch>().Reset();
+                collision.GetComponent<AILaunch>().Restart();
                 score.AddPointEnemy();
             }
         }

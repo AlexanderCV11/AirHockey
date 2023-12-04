@@ -16,19 +16,11 @@ public class AILaunch : MonoBehaviour
         AI_RB = GetComponent<Rigidbody2D>();
         AI_RB.isKinematic = true;
         startPosition = transform.position;
-        LaunchFicha();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void LaunchFicha()
     {
-        clampedPosition = new Vector2(8.0f, 
-                                      Random.Range(-MAX_DISTANCE, MAX_DISTANCE));
+        clampedPosition = new Vector2(8.0f, Random.Range(-MAX_DISTANCE, MAX_DISTANCE));
         //Debug.Log(clampedPosition);
         AI_RB.isKinematic = false;
         Vector2 throwVector = startPosition - clampedPosition;
@@ -36,7 +28,7 @@ public class AILaunch : MonoBehaviour
         Invoke("Reset", 5f);
     }
 
-    public void Reset()
+    public void Restart()
     {
         transform.position = startPosition;
         AI_RB.isKinematic = true;

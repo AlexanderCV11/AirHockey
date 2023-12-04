@@ -7,9 +7,11 @@ public class Ficha : MonoBehaviour
     [SerializeField] public float force; //fuerza con la que sale disparada la ficha
     [SerializeField] private float MAX_DISTANCE; //maxima distancia para poder hacer drag
 
-    private Camera mainCamera; //referencia a la camara
-    public Rigidbody2D rb; //referencia a el rigidbody de la ficha
     private Vector2 startPosition, clampedPosition; //punto donde se empieza el drag y donde termina
+    private Camera mainCamera; //referencia a la camara
+    private GameManager refGM;
+    
+    public Rigidbody2D rb; //referencia a el rigidbody de la ficha
     public bool canSlow; //boolean para poder relantizar la ficha enemiga
 
 
@@ -20,11 +22,16 @@ public class Ficha : MonoBehaviour
         rb = GetComponent<Rigidbody2D>(); //se obtiene elrigidbody y las fiscas de la ficha
         rb.isKinematic = true; //se inicializa la ficha de tipo kinematic
         startPosition = transform.position; //se define que el punto de inicio de la ficha es donde empieza
+        refGM = GameObject.FindAnyObjectByType<GameManager>();
     }
 
     private void OnMouseDrag()
     {
-        SetPosition(); //funcion que se llama cuando se arrastra el mouse
+        if (refGM.startParty)
+        {
+            SetPosition(); //funcion que se llama cuando se arrastra el mouse
+        }
+        
     }
 
     private void SetPosition()
@@ -49,7 +56,10 @@ public class Ficha : MonoBehaviour
 
     private void OnMouseUp()
     {
-        Throw(); //funcion que se llama cuando se levanta el mouse 
+        if (refGM.startParty)
+        {
+            Throw(); //funcion que se llama cuando se levanta el mouse 
+        }
     }
     /*funcion para lanzar la ficha*/
     private void Throw()
