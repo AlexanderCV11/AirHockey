@@ -11,7 +11,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Update()
     {
-        globalScore.text = scoreEnemy + "_" + scorePlayer;
+        globalScore.text = scoreEnemy + "|" + scorePlayer;
     }
 
     public void  AddPointEnemy()

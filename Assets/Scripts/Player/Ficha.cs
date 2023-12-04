@@ -13,6 +13,7 @@ public class Ficha : MonoBehaviour
     
     public Rigidbody2D rb; //referencia a el rigidbody de la ficha
     public bool canSlow; //boolean para poder relantizar la ficha enemiga
+    public GameObject uiPoints;
 
 
     // Start is called before the first frame update
@@ -82,23 +83,13 @@ public class Ficha : MonoBehaviour
         CancelInvoke("Reset"); /*se llama a una funcion de cancel un problema que hace que esta funcion se llame varias veces*/
     }
 
-    /*cuando algo entra en el trigger*/
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.tag == "AI") //si el tag del collaider es "Ficha"
+        Vector3 spawnPoint;
+        if (collision.gameObject.layer == 6 && !rb.isKinematic)
         {
-            if (canSlow) //si la ficha tiene activado u n power up
-            {
-                Debug.Log("slow");
-                //collision.GetComponent<Rigidbody2D>().velocity = Vector2.zero; //la velocidad se vuelve cero, se "congela"
-                //canSlow = false;
-            }
-            else
-            {
-                rb.isKinematic = false; //se vuelve dinamica la ficha
-            }
-
-            Invoke("Reset", 5f); //dentro de 5 segundos se llamara a una funcion que restaura los valores de la ficha
+            spawnPoint = collision.transform.position;
+            Instantiate(uiPoints, spawnPoint, uiPoints.transform.rotation);
         }
     }
 }
