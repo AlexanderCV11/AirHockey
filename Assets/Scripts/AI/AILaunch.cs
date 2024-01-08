@@ -7,9 +7,8 @@ public class AILaunch : MonoBehaviour
     [SerializeField] private float force;
     [SerializeField] private float MAX_DISTANCE;
 
-    private Rigidbody2D AI_RB; //ref del rigidbody de la ficha
-    private Vector2 startPosition, clampedPosition; 
-    //private bool canSlow;
+    public Rigidbody2D AI_RB; //ref del rigidbody de la ficha
+    public Vector2 startPosition, clampedPosition; 
 
     void Start()
     {
@@ -33,8 +32,12 @@ public class AILaunch : MonoBehaviour
         transform.position = startPosition;
         AI_RB.isKinematic = true;
         AI_RB.velocity = Vector2.zero;
-        //canSlow = false;
 
         Invoke("LaunchFicha", 1f);
+    }
+
+    public void IceHit()
+    {
+        AI_RB.velocity /= 2;
     }
 }

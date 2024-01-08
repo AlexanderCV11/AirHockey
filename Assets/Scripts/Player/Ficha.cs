@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Ficha : MonoBehaviour
 {
-    [SerializeField] public float force; //fuerza con la que sale disparada la ficha
-    [SerializeField] private float MAX_DISTANCE; //maxima distancia para poder hacer drag
+    /*[SerializeField]*/ private float force = 400; //fuerza con la que sale disparada la ficha
+    /*[SerializeField]*/ private float MAX_DISTANCE = 2; //maxima distancia para poder hacer drag
 
-    private Vector2 startPosition, clampedPosition; //punto donde se empieza el drag y donde termina
+    public Vector2 startPosition, clampedPosition; //punto donde se empieza el drag y donde termina
     private Camera mainCamera; //referencia a la camara
-    private GameManager refGM;
+    private GameManager refGM; //referencia al game manager
     
-    public Rigidbody2D rb; //referencia a el rigidbody de la ficha
-    public bool canSlow; //boolean para poder relantizar la ficha enemiga
-    public GameObject uiPoints;
+    private Rigidbody2D rb; //referencia a el rigidbody de la ficha
+    public GameObject uiPoints; //referencia del prefab que muestra "+100" puntos cuando choca con el la ficha enemiga
+    private bool icePower;
 
 
     // Start is called before the first frame update
@@ -62,6 +62,7 @@ public class Ficha : MonoBehaviour
             Throw(); //funcion que se llama cuando se levanta el mouse 
         }
     }
+
     /*funcion para lanzar la ficha*/
     private void Throw()
     {
@@ -78,18 +79,35 @@ public class Ficha : MonoBehaviour
         transform.position = startPosition; //la ficha velve a su posicion original
         rb.isKinematic = true; //se veulve kinematic
         rb.velocity = Vector2.zero; //la velocidad se vuelve cero
-        canSlow = false; //falso la variable de item
 
         CancelInvoke("Reset"); /*se llama a una funcion de cancel un problema que hace que esta funcion se llame varias veces*/
     }
 
+    /*funcion que activa el poder de fuego*/
+    public void FirePower()
+    {
+        force *= 2; //aumenta la velocidad a la que este sale lanzado
+    }
+
+    /*funcion que activa el poder de hielo*/
+    public void IcePower()
+    {
+        icePower = true;
+    }
+
+    /*funcion que spawnea objeti UI de puntos conseguidos cuando la ficha del jugador choca con la ficha enemiga*/
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Vector3 spawnPoint;
+        Vector3 spawnPoint; //variable que guarda la posicion donde chocaron
         if (collision.gameObject.layer == 6 && !rb.isKinematic)
         {
-            spawnPoint = collision.transform.position;
-            Instantiate(uiPoints, spawnPoint, uiPoints.transform.rotation);
+            if (icePower)
+            {
+                refGM.refAI.IceHit();
+            }
+            spawnPoint = collision.transform.position; //guarda el punto de colision
+            Instantiate(uiPoints, spawnPoint, uiPoints.transform.rotation); //spawnea los puntos en la ubicacion de choque
+            refGM.PlayerAddCash();
         }
     }
 }

@@ -6,8 +6,12 @@ using UnityEngine;
 public class Goal : MonoBehaviour
 {
     public bool ply_ai; //variable para saber si es porteria aliada o enemiga. Verdaderon para aliada, falso para enemiga
-    public ScoreManager score;
+    public GameManager score;
 
+    private void Start()
+    {
+        Invoke("GetScoreManager", 1f);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -28,5 +32,10 @@ public class Goal : MonoBehaviour
                 score.AddPointPlayer();
             }
         }
+    }
+
+    void GetScoreManager()
+    {
+        score = GameObject.FindAnyObjectByType<GameManager>();
     }
 }
