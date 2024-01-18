@@ -82,9 +82,9 @@ public class GameManager : MonoBehaviour
     void ResetLevel()
     {
         refPlayer.transform.position = refPlayer.startPosition; //el jugador vuelve a la posicion de lanzamiento
-        refAI.AI_RB.isKinematic = true;
+        refAI.rbENY.isKinematic = true;
         refAI.transform.position = refAI.startPosition; //el enemigo vuelve a la posicion de lanzamiento
-        refAI.AI_RB.velocity = Vector2.zero; //se define la velocidad en cero para evitar que la ficha enemiga salga disparada antes de tiempo
+        refAI.rbENY.velocity = Vector2.zero; //se define la velocidad en cero para evitar que la ficha enemiga salga disparada antes de tiempo
 
         rock.SetActive(false);
         startParty = false; //se inicia la fase de preparacion

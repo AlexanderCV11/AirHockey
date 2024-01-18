@@ -1582,6 +1582,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6776489264171761654, guid: e3b6745a732b4b74e89ef9e2b28c2f6c, type: 3}
+      propertyPath: force
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 6776489264171761654, guid: e3b6745a732b4b74e89ef9e2b28c2f6c, type: 3}
+      propertyPath: collENY
+      value: 
+      objectReference: {fileID: 1769262320}
+    - target: {fileID: 6776489264171761654, guid: e3b6745a732b4b74e89ef9e2b28c2f6c, type: 3}
       propertyPath: uiPoints
       value: 
       objectReference: {fileID: 3538451054567480342, guid: 02f4d1dcca1927f4aa7e169c7807891a, type: 3}
@@ -1663,6 +1671,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b242c34179c482e459177444a870ccb1, type: 3}
+--- !u!58 &1380957805 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 3386493771884899185, guid: e3b6745a732b4b74e89ef9e2b28c2f6c, type: 3}
+  m_PrefabInstance: {fileID: 1012667762}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1429340544
 GameObject:
   m_ObjectHideFlags: 0
@@ -2779,6 +2792,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1696930060}
   m_CullTransparentMesh: 1
+--- !u!58 &1769262320 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 8854914235325490220, guid: 4b5debfcbbac058458a0ca9edcffd0b7, type: 3}
+  m_PrefabInstance: {fileID: 5432978010784613821}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1883203468
 GameObject:
   m_ObjectHideFlags: 0
@@ -3203,8 +3221,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1438643386323216395, guid: 4b5debfcbbac058458a0ca9edcffd0b7, type: 3}
       propertyPath: force
-      value: 400
+      value: 300
       objectReference: {fileID: 0}
+    - target: {fileID: 1438643386323216395, guid: 4b5debfcbbac058458a0ca9edcffd0b7, type: 3}
+      propertyPath: collPLY
+      value: 
+      objectReference: {fileID: 1380957805}
     - target: {fileID: 1438643386323216395, guid: 4b5debfcbbac058458a0ca9edcffd0b7, type: 3}
       propertyPath: MAX_DISTANCE
       value: 2
