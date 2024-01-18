@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ficha : MonoBehaviour
 {
-    /*[SerializeField]*/ private float force = 400; //fuerza con la que sale disparada la ficha
+    [SerializeField] private float force = 400; //fuerza con la que sale disparada la ficha
     /*[SerializeField]*/ private float MAX_DISTANCE = 2; //maxima distancia para poder hacer drag
 
     public Vector2 startPosition, clampedPosition; //punto donde se empieza el drag y donde termina
@@ -68,7 +68,7 @@ public class Ficha : MonoBehaviour
     {
         rb.isKinematic = false; //la ficha se vulve un objeto dinamico para que tenga fisicas 
         Vector2 throwVector = startPosition - clampedPosition; //variable que calcula el angulo el vector (direccion y fuerza) en la que va a salir disparada la ficha
-        rb.AddForce(throwVector * force); //se le agrega la fuerza previamente calculada
+        rb.AddForce(new Vector2(Mathf.Ceil(throwVector.x * force), Mathf.Ceil(throwVector.y * force))); //se le agrega la fuerza previamente calculada
 
         Invoke("Reset", 5f); //dentro de 5 segundos se llamara a una funcion que restaura los valores de la ficha 
     }
@@ -105,9 +105,15 @@ public class Ficha : MonoBehaviour
             {
                 refGM.refAI.IceHit();
             }
+            ChangeDirection(collision);
             spawnPoint = collision.transform.position; //guarda el punto de colision
             Instantiate(uiPoints, spawnPoint, uiPoints.transform.rotation); //spawnea los puntos en la ubicacion de choque
             refGM.PlayerAddCash();
         }
+    }
+
+    public void ChangeDirection(Collision2D rbPLY_2)
+    {
+
     }
 }

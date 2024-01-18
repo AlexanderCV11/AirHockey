@@ -20,7 +20,6 @@ public class AILaunch : MonoBehaviour
     public void LaunchFicha()
     {
         clampedPosition = new Vector2(8.0f, Random.Range(-MAX_DISTANCE, MAX_DISTANCE));
-        //Debug.Log(clampedPosition);
         AI_RB.isKinematic = false;
         Vector2 throwVector = startPosition - clampedPosition;
         AI_RB.AddForce(throwVector * force);
