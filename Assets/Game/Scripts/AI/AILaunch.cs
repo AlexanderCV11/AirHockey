@@ -22,7 +22,7 @@ public class AILaunch : MonoBehaviour
 
     public void LaunchFicha()
     {
-        clampedPosition = new Vector2(10.0f, Random.Range(-MAX_DISTANCE, MAX_DISTANCE));
+        clampedPosition = new Vector2(8.5f, Random.Range(-MAX_DISTANCE, MAX_DISTANCE));
         rbENY.isKinematic = false;
         Vector2 throwVector = startPosition - clampedPosition;
         rbENY.AddForce(throwVector * force);
