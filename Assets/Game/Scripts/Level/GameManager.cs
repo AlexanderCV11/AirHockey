@@ -12,13 +12,15 @@ public class GameManager : MonoBehaviour
     public AILaunch refAI; //referencia de la ficha enemiga
     public Ficha refPlayer; //referencia de la ficha del player
     public GameObject rock;
+    public PowerUps[] powers;
 
     /*variables de score*/
     private int scoreEnemy = 0; //score del enemigo
     private int scorePlayer = 0; //score del jugador
     public int playerCash; //dinero del jugador
     public int enemyCash; //dinero del enemigo
-    public TextMeshProUGUI globalScore; //texto de score
+    public TextMeshProUGUI playerScore; //texto de score
+    public TextMeshProUGUI enemyScore; //texto de score
     public TextMeshProUGUI uiCashPoints; //texto de puntos para comprar power ups
 
     private void Start()
@@ -52,24 +54,14 @@ public class GameManager : MonoBehaviour
     public void AddPointEnemy()
     {
         scoreEnemy++; //agrega punteje del enemigo
-        globalScore.text = scoreEnemy + "|" + scorePlayer; //actualizar el puntaje
-        if (scoreEnemy >= 2)
-        {
-            //aqui va la funcion que "reinicia la prtida"
-            Invoke("ResetLevel", 0.01f);
-        }
+        enemyScore.text = "" + scoreEnemy; //actualizar el puntaje
     }
 
     /*funcion que indica que el jugador puntuo*/
     public void AddPointPlayer()
     {
         scorePlayer++; //agrega puntaje al jugador
-        globalScore.text = scoreEnemy + "|" + scorePlayer; //actualizar el puntaje
-        if (scorePlayer >= 2)
-        {
-            //aqui va la funcion que "reinicia la prtida"
-            Invoke("ResetLevel", 0.01f);
-        }
+        playerScore.text = "" + scorePlayer; //actualizar el puntaje
     }
 
     //funcion para agregar dinero al player. Quiza en un foturo se agregue un argumento 
@@ -79,18 +71,29 @@ public class GameManager : MonoBehaviour
     }
 
     /*funcion que resetea las estadisticas necesarias para otra ronda*/
-    void ResetLevel()
+    public void ResetLevel()
     {
-        refPlayer.transform.position = refPlayer.startPosition; //el jugador vuelve a la posicion de lanzamiento
+        /*refPlayer.transform.position = refPlayer.startPosition; //el jugador vuelve a la posicion de lanzamiento
+        refPlayer.vfx.SetActive(false);
         refAI.rbENY.isKinematic = true;
         refAI.transform.position = refAI.startPosition; //el enemigo vuelve a la posicion de lanzamiento
-        refAI.rbENY.velocity = Vector2.zero; //se define la velocidad en cero para evitar que la ficha enemiga salga disparada antes de tiempo
+        refAI.rbENY.velocity = Vector2.zero; //se define la velocidad en cero para evitar que la ficha enemiga salga disparada antes de tiempo*/
+        refPlayer.Reset();
+        refPlayer.vfx.SetActive(false);
+        refPlayer.force = 300;
+        refPlayer.forceAfterCollision = 10f;
+
+        refAI.Restart();
+        powers[0].selected = false;
+        powers[1].selected = false;
+        powers[2].selected = false;
 
         rock.SetActive(false);
         startParty = false; //se inicia la fase de preparacion
         scoreEnemy = 0; //se reinicia el score del enemigo
         scorePlayer = 0; //se reinicia el score del jugador
-        globalScore.text = scoreEnemy + "|" + scorePlayer; //actualizar el puntaje
+        enemyScore.text = "" + scoreEnemy; //actualizar el puntaje enemigo
+        playerScore.text = "" + scorePlayer; //actualizar el puntaje del jugador
         StartPowerUpsPanel();
     }
 }

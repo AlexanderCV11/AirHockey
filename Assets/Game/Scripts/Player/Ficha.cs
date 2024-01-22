@@ -7,14 +7,15 @@ public class Ficha : MonoBehaviour
     public Vector2 startPosition, clampedPosition; //punto donde se empieza el drag y donde termina
     public Collider2D collENY;
     public GameObject uiPoints; //referencia del prefab que muestra "+100" puntos cuando choca con el la ficha enemiga
+    public GameObject vfx;
     
-    private float force = 300; //fuerza con la que sale disparada la ficha
+    public float force = 300; //fuerza con la que sale disparada la ficha
     private float MAX_DISTANCE = 2; //maxima distancia para poder hacer drag
     private GameManager refGM; //referencia al game manager
     private Camera mainCamera; //referencia a la camara
     private Rigidbody2D rbPLY; //referencia a el rigidbody de la ficha
     private bool icePower;
-    private float forceAfterCollision = 10f;
+    public float forceAfterCollision = 10f;
 
 
     // Start is called before the first frame update
@@ -25,6 +26,8 @@ public class Ficha : MonoBehaviour
         rbPLY.isKinematic = true; //se inicializa la ficha de tipo kinematic
         startPosition = transform.position; //se define que el punto de inicio de la ficha es donde empieza
         refGM = GameObject.FindAnyObjectByType<GameManager>();
+
+        vfx.SetActive(false);
     }
 
     private void OnMouseDrag()
@@ -83,8 +86,9 @@ public class Ficha : MonoBehaviour
     /*funcion que activa el poder de fuego*/
     public void FirePower()
     {
-        force *= 2;
-        forceAfterCollision *= 2; //aumenta la velocidad a la que este sale lanzado
+        force *= 3;
+        forceAfterCollision *= 3; //aumenta la velocidad a la que este sale lanzado
+        vfx.SetActive(true);
     }
 
     /*funcion que activa el poder de hielo*/
@@ -97,7 +101,7 @@ public class Ficha : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
-        if (collision.collider == collENY)
+        if (collision.collider == collENY && !rbPLY.isKinematic)
         {
             Vector3 spawnPoint; //variable que guarda la posicion donde chocaron
             float _temp;

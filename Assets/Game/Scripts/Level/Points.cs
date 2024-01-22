@@ -16,7 +16,7 @@ public class Points : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        score.alpha = Mathf.Lerp(score.alpha, 0.0f, 10.0f * Time.deltaTime);
+        score.alpha = Mathf.Lerp(score.alpha, 0.0f, 3.0f * Time.deltaTime);
         Destroy(gameObject, 1.0f);
     }
 }

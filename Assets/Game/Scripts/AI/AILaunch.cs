@@ -11,6 +11,9 @@ public class AILaunch : MonoBehaviour
     public Rigidbody2D rbENY; //ref del rigidbody de la ficha
     public Vector2 startPosition, clampedPosition;
     public float constVelocity;
+    public GameObject vfx;
+    public GameManager refGM;
+
     private Vector2 iceVelocity;
 
     void Start()
@@ -18,26 +21,31 @@ public class AILaunch : MonoBehaviour
         rbENY = GetComponent<Rigidbody2D>();
         rbENY.isKinematic = true;
         startPosition = transform.position;
+        vfx.SetActive(false);
     }
 
     public void LaunchFicha()
     {
-        clampedPosition = new Vector2(8.5f, Random.Range(-MAX_DISTANCE, MAX_DISTANCE));
-        rbENY.isKinematic = false;
-        Vector2 throwVector = startPosition - clampedPosition;
-        rbENY.AddForce(throwVector * force);
-
-        constVelocity = Mathf.Abs(rbENY.velocity.x);
-        if (Mathf.Abs(rbENY.velocity.y) > Mathf.Abs(rbENY.velocity.x))
+        if (refGM.startParty)
         {
-            constVelocity = Mathf.Abs(rbENY.velocity.y);
-        }
+            clampedPosition = new Vector2(8.5f, Random.Range(-MAX_DISTANCE, MAX_DISTANCE));
+            rbENY.isKinematic = false;
+            Vector2 throwVector = startPosition - clampedPosition;
+            rbENY.AddForce(throwVector * force);
 
-        //Invoke("Reset", 5f);
+            constVelocity = Mathf.Abs(rbENY.velocity.x);
+            if (Mathf.Abs(rbENY.velocity.y) > Mathf.Abs(rbENY.velocity.x))
+            {
+                constVelocity = Mathf.Abs(rbENY.velocity.y);
+            }
+
+            Invoke("Restart", 5f);
+        }
     }
 
     public void Restart()
     {
+        CancelInvoke("Restart");
         transform.position = startPosition;
         rbENY.isKinematic = true;
         rbENY.velocity = Vector2.zero;
@@ -50,6 +58,7 @@ public class AILaunch : MonoBehaviour
         iceVelocity = rbENY.velocity;
         rbENY.isKinematic = true;
         rbENY.velocity = Vector2.zero;
+        vfx.SetActive(true);
 
         Invoke("ResetIce", 1.5f);
     }
@@ -58,11 +67,12 @@ public class AILaunch : MonoBehaviour
     {
         rbENY.isKinematic = false;
         rbENY.velocity = iceVelocity;
+        vfx.SetActive(false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider == collPLY)
+        if (collision.collider == collPLY && !rbENY.isKinematic)
         {
             float _temp;
 
